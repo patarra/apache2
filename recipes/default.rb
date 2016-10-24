@@ -23,6 +23,10 @@ package 'apache2' do # ~FC009 only available in apt_package. See #388
   default_release node['apache']['default_release'] unless node['apache']['default_release'].nil?
 end
 
+file "/etc/httpd/conf.modules.d/00-systemd.conf" do 
+  action :delete
+end
+
 %w(sites-available sites-enabled mods-available mods-enabled conf-available conf-enabled).each do |dir|
   directory "#{node['apache']['dir']}/#{dir}" do
     mode '0755'
